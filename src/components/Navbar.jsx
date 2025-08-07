@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 
 function Navbar() {
-  const { isLoggedIn, user } = useContext(AuthContext);
+  const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
 
   return (
     <div className="drawer">
@@ -45,7 +45,9 @@ function Navbar() {
                   <Link to="/profile">
                     <button className="btn btn-warning">Your Adventure</button>
                   </Link>
-                  <button className="btn btn-neutral ml-2">Logout</button>
+                  <button onClick={logOutUser} className="btn btn-neutral ml-2">
+                    Logout
+                  </button>
                 </>
               )}
               {!isLoggedIn && (
@@ -74,6 +76,7 @@ function Navbar() {
           {/* Sidebar content here */}
           {isLoggedIn && (
             <>
+              <span>{user && user.name}</span>
               <Link to="/profile">
                 <button className="btn btn-warning mb-2">Your Adventure</button>
               </Link>
