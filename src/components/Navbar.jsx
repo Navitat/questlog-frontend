@@ -1,4 +1,10 @@
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../context/auth.context";
+
 function Navbar() {
+  const { isLoggedIn, user } = useContext(AuthContext);
+
   return (
     <div className="drawer">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
@@ -27,17 +33,31 @@ function Navbar() {
             </label>
           </div>
           <div className="mx-2 flex-1 px-2">
-            <h1 className="text-2xl">QuestLog</h1>
+            <Link to="/">
+              <button className="btn btn-primary">QuestLog</button>
+            </Link>
           </div>
           <div className="hidden flex-none lg:block">
             <ul className="menu menu-horizontal">
               {/* Navbar menu content here */}
-              <li>
-                <a>Navbar Item 1</a>
-              </li>
-              <li>
-                <a>Navbar Item 2</a>
-              </li>
+              {isLoggedIn && (
+                <>
+                  <Link to="/profile">
+                    <button className="btn btn-warning">Your Adventure</button>
+                  </Link>
+                  <button className="btn btn-neutral ml-2">Logout</button>
+                </>
+              )}
+              {!isLoggedIn && (
+                <>
+                  <Link to="/signup">
+                    <button className="btn btn-secondary">Sign up</button>
+                  </Link>
+                  <Link to="/login">
+                    <button className="btn btn-accent ml-2">Login</button>
+                  </Link>
+                </>
+              )}
             </ul>
           </div>
         </div>
@@ -52,12 +72,24 @@ function Navbar() {
         ></label>
         <ul className="menu bg-base-200 min-h-full w-80 p-4">
           {/* Sidebar content here */}
-          <li>
-            <a>Sidebar Item 1</a>
-          </li>
-          <li>
-            <a>Sidebar Item 2</a>
-          </li>
+          {isLoggedIn && (
+            <>
+              <Link to="/profile">
+                <button className="btn btn-warning mb-2">Your Adventure</button>
+              </Link>
+              <button className="btn btn-neutral">Logout</button>
+            </>
+          )}
+          {!isLoggedIn && (
+            <>
+              <Link to="/signup">
+                <button className="btn btn-secondary mb-2">Sign up</button>
+              </Link>
+              <Link to="/login">
+                <button className="btn btn-accent">Login</button>
+              </Link>
+            </>
+          )}
         </ul>
       </div>
     </div>
