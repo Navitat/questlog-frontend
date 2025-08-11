@@ -76,7 +76,6 @@ function Navbar() {
           {/* Sidebar content here */}
           {isLoggedIn && (
             <>
-              <span>{user && user.name}</span>
               <Link to="/profile">
                 <button className="btn btn-warning mb-2">Your Adventure</button>
               </Link>
