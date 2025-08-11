@@ -40,9 +40,13 @@ function Profile() {
           headers: { Authorization: `Bearer ${storedToken}` },
         }
       )
-      .then(() => {
+      .then((response) => {
+        const data = response.data;
+
         setUserInfo((prev) => ({
           ...prev,
+          level: data.userLevel,
+          experience: data.userExp,
           disciplines: prev.disciplines.map((d) =>
             d._id === id ? { ...d, completed: true } : d
           ),
