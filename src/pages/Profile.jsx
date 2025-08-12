@@ -136,6 +136,40 @@ function Profile() {
       });
   };
 
+  const completeSidequest = (id) => {
+    const storedToken = localStorage.getItem("authToken");
+
+    axios
+      .patch(
+        `${API_URL}/api/user/sidequests/${id}/complete`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        }
+      )
+      .then((response) => {
+        const data = response.data;
+
+        setUserInfo((prev) => ({
+          ...prev,
+          level: data.userLevel,
+          experience: data.userExp,
+          sideQuests: prev.sideQuests.map((s) =>
+            s._id === id ? { ...s, completed: true } : s
+          ),
+          skills: prev.skills.map((skill) =>
+            skill.name === data.skillName
+              ? { ...skill, level: data.skillLevel, experience: data.skillExp }
+              : skill
+          ),
+        }));
+      })
+      .catch((error) => {
+        console.log("Error completing Discipline");
+        console.log(error);
+      });
+  };
+
   return (
     <>
       <div className="min-h-screen mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
@@ -214,7 +248,7 @@ function Profile() {
                   <h3 className="font-bold text-lg mb-4">Add Discipline</h3>
                   <input
                     type="text"
-                    placeholder="Discipline name"
+                    placeholder="Wake up at 7am"
                     className="input input-bordered w-full mb-4"
                     value={disciplineName}
                     onChange={(e) => setDisciplineName(e.target.value)}
@@ -269,7 +303,10 @@ function Profile() {
                     </button>
                   </div>
                 </div>
-                <SidequestsList sidequests={userInfo.sideQuests} />
+                <SidequestsList
+                  sidequests={userInfo.sideQuests}
+                  onComplete={completeSidequest}
+                />
               </div>
             </div>
             {/* Modal add sidequest */}
