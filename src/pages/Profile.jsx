@@ -129,8 +129,11 @@ function Profile() {
               <p className="card-title">Skills Progress</p>
               {userInfo.skills.map((skill) => {
                 return (
-                  <div key={skill._id} className="items-center">
-                    <p className="text-sm block">
+                  <div
+                    key={skill._id}
+                    className="flex flex-col items-center text-center"
+                  >
+                    <p className="text-sm">
                       {skill.name} | Level: {skill.level}
                     </p>
                     <ExperienceBar currentXp={skill.experience} />
