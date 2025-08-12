@@ -7,7 +7,13 @@ import DisciplinesList from "../components/DisciplinesList";
 
 function Profile() {
   const { user, isLoading } = useContext(AuthContext);
-  const [userInfo, setUserInfo] = useState({ disciplines: [] });
+  const [userInfo, setUserInfo] = useState({ disciplines: [], skills: [] });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const [disciplineName, setDisciplineName] = useState("");
+  const [selectedSkillId, setSelectedSkillId] = useState("");
+  const [selectedType, setSelectedType] = useState("good");
 
   const getUser = () => {
     const storedToken = localStorage.getItem("authToken");
@@ -58,64 +64,155 @@ function Profile() {
       });
   };
 
+  const createDiscipline = () => {
+    setLoading(true);
+
+    const requestBody = {
+      name: disciplineName,
+      type: selectedType,
+      skillId: selectedSkillId,
+    };
+    const storedToken = localStorage.getItem("authToken");
+
+    axios
+      .post(`${API_URL}/api/user/disciplines`, requestBody, {
+        headers: { Authorization: `Bearer ${storedToken}` },
+      })
+      .then((response) => {
+        getUser();
+
+        setDisciplineName("");
+        setIsModalOpen(false);
+      })
+      .catch((error) => {
+        console.log("Error while creating discipline");
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   return (
     <>
-      <div className="flex items-center justify-center m-2">
-        <div className="card bg-base-100 shadow-xl p-4">
-          <div className="flex items-center gap-6">
-            <figure>
-              <img
-                src={userInfo.profileImg}
-                alt="User avatar"
-                className="rounded-full w-24 h-24"
-              />
-            </figure>
+      <div className="min-h-screen mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+        {/* Left column */}
+        <div className="flex flex-col gap-6">
+          {/* Experience */}
+          <div className="card bg-base-100 shadow-xl p-4">
+            <div className="flex flex-wrap md:flex-nowrap items-center gap-6">
+              <figure>
+                <img
+                  src={userInfo.profileImg}
+                  alt="User avatar"
+                  className="rounded-full w-24 h-24"
+                />
+              </figure>
 
-            <div className="flex flex-col justify-center">
-              <h2 className="card-title">{userInfo.name}</h2>
-              <p>Level: {userInfo.level}</p>
-            </div>
-            <div className="flex flex-col justify-center">
-              <h2 className="card-title"></h2>
-              <div>
+              <div className="flex flex-col justify-center">
+                <h2 className="card-title">{userInfo.name}</h2>
+                <p>Level: {userInfo.level}</p>
+              </div>
+
+              <div className="flex flex-col justify-center flex-1 min-w-[200px]">
                 <p>Current XP:</p>
                 <ExperienceBar currentXp={userInfo.experience} />
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div className="flex justify-center gap-4 my-4">
-        <button className="btn btn-primary">Go to Quests</button>
-        <button className="btn btn-secondary">Inventory</button>
-      </div>
-
-      <div className="mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
-        <div className="card bg-base-100 shadow-xl">
-          <div className="card-body">
-            <div className="flex items-center gap-2">
-              <h2 className="card-title">Disciplines</h2>
-              <div className="tooltip" data-tip="For your daily routines!">
-                <span className="btn btn-sm cursor-pointer">?</span>
+          {/* Disciplines & Sidequests side-by-side */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {/* Disciplines */}
+            <div className="card bg-base-100 shadow-xl">
+              <div className="card-body">
+                <div className="flex items-center justify-between gap-2">
+                  <h2 className="card-title">Disciplines</h2>
+                  <div className="tooltip" data-tip="For your daily routines!">
+                    <span className="btn btn-sm cursor-pointer">?</span>
+                  </div>
+                  <div>
+                    <button
+                      className="btn btn-accent"
+                      onClick={() => setIsModalOpen(true)}
+                    >
+                      Add
+                    </button>
+                  </div>
+                </div>
+                <DisciplinesList
+                  disciplines={userInfo.disciplines}
+                  onComplete={completeDiscipline}
+                />
               </div>
             </div>
-            <DisciplinesList
-              disciplines={userInfo.disciplines}
-              onComplete={completeDiscipline}
-            />
+
+            {/* Modal */}
+            {isModalOpen && (
+              <div className="modal modal-open">
+                <div className="modal-box">
+                  <h3 className="font-bold text-lg mb-4">Add Discipline</h3>
+                  <input
+                    type="text"
+                    placeholder="Discipline name"
+                    className="input input-bordered w-full mb-4"
+                    value={disciplineName}
+                    onChange={(e) => setDisciplineName(e.target.value)}
+                  />
+                  <select
+                    className="select select-bordered w-full mb-4"
+                    value={selectedSkillId}
+                    onChange={(e) => setSelectedSkillId(e.target.value)}
+                  >
+                    {userInfo.skills.map((s) => {
+                      return (
+                        <option key={s._id} value={s._id}>
+                          {s.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <div className="modal-action">
+                    <button
+                      className="btn btn-accent"
+                      disabled={!disciplineName || loading}
+                      onClick={createDiscipline}
+                    >
+                      {loading ? "Saving..." : "Save"}
+                    </button>
+                    <button
+                      className="btn"
+                      onClick={() => setIsModalOpen(false)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Sidequests */}
+            <div className="card bg-base-100 shadow-xl">
+              <div className="card-body">
+                <div className="flex items-center gap-2">
+                  <h2 className="card-title">Side Quests</h2>
+                  <div className="tooltip" data-tip="For the urgent tasks!">
+                    <span className="btn btn-sm cursor-pointer">?</span>
+                  </div>
+                </div>
+                <p>...</p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="card bg-base-100 shadow-xl">
-          <div className="card-body">
-            <div className="flex items-center gap-2">
-              <h2 className="card-title">Side Quests</h2>
-              <div className="tooltip" data-tip="For the urgent tasks!">
-                <span className="btn btn-sm cursor-pointer">?</span>
-              </div>
+        {/* Right column */}
+        <div className="flex flex-col gap-6">
+          <div className="card bg-base-100 shadow-xl">
+            <div className="card-body">
+              <h2 className="card-title">Quests</h2>
+              <p>Coming soon...</p>
             </div>
-            <p>...</p>
           </div>
         </div>
       </div>
