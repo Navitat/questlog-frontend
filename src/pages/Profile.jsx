@@ -86,10 +86,20 @@ function Profile() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+      <div className="flex justify-center gap-4 my-4">
+        <button className="btn btn-primary">Go to Quests</button>
+        <button className="btn btn-secondary">Inventory</button>
+      </div>
+
+      <div className="mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
         <div className="card bg-base-100 shadow-xl">
           <div className="card-body">
-            <h2 className="card-title">Disciplines</h2>
+            <div className="flex items-center gap-2">
+              <h2 className="card-title">Disciplines</h2>
+              <div className="tooltip" data-tip="For your daily routines!">
+                <span className="btn btn-sm cursor-pointer">?</span>
+              </div>
+            </div>
             <DisciplinesList
               disciplines={userInfo.disciplines}
               onComplete={completeDiscipline}
@@ -99,7 +109,12 @@ function Profile() {
 
         <div className="card bg-base-100 shadow-xl">
           <div className="card-body">
-            <h2 className="card-title">Quests</h2>
+            <div className="flex items-center gap-2">
+              <h2 className="card-title">Side Quests</h2>
+              <div className="tooltip" data-tip="For the urgent tasks!">
+                <span className="btn btn-sm cursor-pointer">?</span>
+              </div>
+            </div>
             <p>...</p>
           </div>
         </div>
