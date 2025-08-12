@@ -1,19 +1,28 @@
-import { useContext, useEffect, useState } from "react";
+import { use, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/auth.context";
 import { API_URL } from "../utils/api";
 import axios from "axios";
 import ExperienceBar from "../components/ExperienceBar";
 import DisciplinesList from "../components/DisciplinesList";
+import SidequestsList from "../components/SidequestsList";
 
 function Profile() {
   const { user, isLoading } = useContext(AuthContext);
-  const [userInfo, setUserInfo] = useState({ disciplines: [], skills: [] });
+  const [userInfo, setUserInfo] = useState({
+    disciplines: [],
+    skills: [],
+    sideQuests: [],
+  });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen2, setIsModalOpen2] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [disciplineName, setDisciplineName] = useState("");
   const [selectedSkillId, setSelectedSkillId] = useState("");
   const [selectedType, setSelectedType] = useState("good");
+
+  const [sidequestName, setSidequestName] = useState("");
+  const [selectedSkillIdSq, setSelectedSkillIdSq] = useState("");
 
   const getUser = () => {
     const storedToken = localStorage.getItem("authToken");
@@ -98,6 +107,33 @@ function Profile() {
       });
   };
 
+  const createSidequest = () => {
+    setLoading(true);
+
+    const requestBody = {
+      name: sidequestName,
+      skillId: selectedSkillIdSq,
+    };
+    const storedToken = localStorage.getItem("authToken");
+
+    axios
+      .post(`${API_URL}/api/user/sidequests`, requestBody, {
+        headers: { Authorization: `Bearer ${storedToken}` },
+      })
+      .then((response) => {
+        getUser();
+        setSidequestName("");
+        setIsModalOpen2(false);
+      })
+      .catch((error) => {
+        console.log("Error while creating sidequest");
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   return (
     <>
       <div className="min-h-screen mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
@@ -169,7 +205,7 @@ function Profile() {
               </div>
             </div>
 
-            {/* Modal */}
+            {/* Modal add discipline*/}
             {isModalOpen && (
               <div className="modal modal-open">
                 <div className="modal-box">
@@ -216,15 +252,66 @@ function Profile() {
             {/* Sidequests */}
             <div className="card bg-base-100 shadow-xl">
               <div className="card-body">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between gap-2">
                   <h2 className="card-title">Side Quests</h2>
                   <div className="tooltip" data-tip="For the urgent tasks!">
                     <span className="btn btn-sm cursor-pointer">?</span>
                   </div>
+                  <div>
+                    <button
+                      className="btn btn-accent"
+                      onClick={() => setIsModalOpen2(true)}
+                    >
+                      Add
+                    </button>
+                  </div>
                 </div>
-                <p>...</p>
+                <SidequestsList sidequests={userInfo.sideQuests} />
               </div>
             </div>
+            {/* Modal add sidequest */}
+            {isModalOpen2 && (
+              <div className="modal modal-open">
+                <div className="modal-box">
+                  <h3 className="font-bold text-lg mb-4">Add Side Quest</h3>
+                  <input
+                    type="text"
+                    placeholder="Sidequest name"
+                    className="input input-bordered w-full mb-4"
+                    value={sidequestName}
+                    onChange={(e) => setSidequestName(e.target.value)}
+                  />
+                  <select
+                    className="select select-bordered w-full mb-4"
+                    value={selectedSkillIdSq}
+                    onChange={(e) => setSelectedSkillIdSq(e.target.value)}
+                  >
+                    {userInfo.skills.map((s) => {
+                      return (
+                        <option key={s._id} value={s._id}>
+                          {s.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <div className="modal-action">
+                    <button
+                      className="btn btn-accent"
+                      disabled={!sidequestName || loading}
+                      onClick={createSidequest}
+                    >
+                      {loading ? "Saving..." : "Save"}
+                    </button>
+                    <button
+                      className="btn"
+                      onClick={() => setIsModalOpen2(false)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
