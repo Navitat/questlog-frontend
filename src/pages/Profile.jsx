@@ -56,6 +56,11 @@ function Profile() {
           disciplines: prev.disciplines.map((d) =>
             d._id === id ? { ...d, completed: true } : d
           ),
+          skills: prev.skills.map((skill) =>
+            skill.name === data.skillName
+              ? { ...skill, level: data.skillLevel, experience: data.skillExp }
+              : skill
+          ),
         }));
       })
       .catch((error) => {
@@ -119,9 +124,23 @@ function Profile() {
                 <ExperienceBar currentXp={userInfo.experience} />
               </div>
             </div>
+            {/* Skills column */}
+            <div className="card bg-base-100 shadow-xl p-4">
+              <p className="card-title">Skills Progress</p>
+              {userInfo.skills.map((skill) => {
+                return (
+                  <div key={skill._id} className="items-center">
+                    <p className="text-sm block">
+                      {skill.name} | Level: {skill.level}
+                    </p>
+                    <ExperienceBar currentXp={skill.experience} />
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
-          {/* Disciplines & Sidequests side-by-side */}
+          {/* Disciplines & Sidequests */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {/* Disciplines */}
             <div className="card bg-base-100 shadow-xl">
