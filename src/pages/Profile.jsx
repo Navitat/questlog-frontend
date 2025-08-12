@@ -95,6 +95,7 @@ function Profile() {
       .then((response) => {
         getUser();
 
+        setSelectedSkillId("");
         setDisciplineName("");
         setIsModalOpen(false);
       })
@@ -122,6 +123,7 @@ function Profile() {
       })
       .then((response) => {
         getUser();
+        setSelectedSkillIdSq("");
         setSidequestName("");
         setIsModalOpen2(false);
       })
@@ -222,6 +224,7 @@ function Profile() {
                     value={selectedSkillId}
                     onChange={(e) => setSelectedSkillId(e.target.value)}
                   >
+                    <option value="">-- Select a skill --</option>
                     {userInfo.skills.map((s) => {
                       return (
                         <option key={s._id} value={s._id}>
@@ -286,6 +289,7 @@ function Profile() {
                     value={selectedSkillIdSq}
                     onChange={(e) => setSelectedSkillIdSq(e.target.value)}
                   >
+                    <option value="">-- Select a skill --</option>
                     {userInfo.skills.map((s) => {
                       return (
                         <option key={s._id} value={s._id}>
