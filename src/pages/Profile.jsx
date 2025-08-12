@@ -5,6 +5,7 @@ import axios from "axios";
 import ExperienceBar from "../components/ExperienceBar";
 import DisciplinesList from "../components/DisciplinesList";
 import SidequestsList from "../components/SidequestsList";
+import { Link } from "react-router-dom";
 
 function Profile() {
   const { user, isLoading } = useContext(AuthContext);
@@ -172,6 +173,13 @@ function Profile() {
 
   return (
     <>
+      <div className="flex justify-center gap-2 mt-4">
+        <Link to="/quests" className="btn btn-primary">
+          Quests
+        </Link>
+        <button className="btn btn-info">Inventory</button>
+      </div>
+
       <div className="min-h-screen mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
         {/* Left column */}
         <div className="flex flex-col gap-6">
@@ -214,7 +222,10 @@ function Profile() {
               })}
             </div>
           </div>
+        </div>
 
+        {/* Right column */}
+        <div className="flex flex-col gap-6">
           {/* Disciplines & Sidequests */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {/* Disciplines */}
@@ -353,16 +364,6 @@ function Profile() {
                 </div>
               </div>
             )}
-          </div>
-        </div>
-
-        {/* Right column */}
-        <div className="flex flex-col gap-6">
-          <div className="card bg-base-100 shadow-xl">
-            <div className="card-body">
-              <h2 className="card-title">Quests</h2>
-              <p>Coming soon...</p>
-            </div>
           </div>
         </div>
       </div>

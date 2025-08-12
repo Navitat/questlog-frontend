@@ -8,6 +8,7 @@ import Profile from "./pages/Profile";
 
 import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
+import QuestsPage from "./pages/QuestsPage";
 
 function App() {
   return (
@@ -20,6 +21,14 @@ function App() {
           element={
             <IsPrivate>
               <Profile />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/quests"
+          element={
+            <IsPrivate>
+              <QuestsPage />
             </IsPrivate>
           }
         />
