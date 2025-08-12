@@ -227,7 +227,7 @@ function Profile() {
         {/* Right column */}
         <div className="flex flex-col gap-6">
           {/* Disciplines & Sidequests */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-1 gap-6">
             {/* Disciplines */}
             <div className="card bg-base-100 shadow-xl">
               <div className="card-body">
