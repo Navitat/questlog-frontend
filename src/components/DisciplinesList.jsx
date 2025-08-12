@@ -1,4 +1,7 @@
 function DisciplinesList(props) {
+  if (!props.disciplines || props.disciplines.length === 0) {
+    return <p>No disciplines. Start adding!</p>;
+  }
   return (
     <>
       {props.disciplines.map((discipline) => {
