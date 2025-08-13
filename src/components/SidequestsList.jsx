@@ -14,11 +14,20 @@ function SidequestsList(props) {
       {incompleteSidequests.map((sidequest) => {
         if (!sidequest.completed) {
           return (
-            <label key={sidequest._id}>
-              {sidequest.name}
+            <label
+              key={sidequest._id}
+              className="flex items-center justify-between p-3 mb-2 rounded-lg bg-base-200 hover:bg-base-300 cursor-pointer"
+            >
+              <span
+                className={`font-medium ${
+                  sidequest.completed ? "line-through text-gray-400" : ""
+                }`}
+              >
+                {sidequest.name}
+              </span>
               <input
-                className="checkbox"
                 type="checkbox"
+                className="checkbox checkbox-primary"
                 checked={!!sidequest.completed}
                 disabled={sidequest.completed}
                 onChange={() => props.onComplete(sidequest._id)}

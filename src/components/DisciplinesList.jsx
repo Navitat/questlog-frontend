@@ -6,11 +6,20 @@ function DisciplinesList(props) {
     <>
       {props.disciplines.map((discipline) => {
         return (
-          <label key={discipline._id}>
-            {discipline.name}
+          <label
+            key={discipline._id}
+            className="flex items-center justify-between p-3 mb-2 rounded-lg bg-base-200 hover:bg-base-300 cursor-pointer"
+          >
+            <span
+              className={`font-medium ${
+                discipline.completed ? "line-through text-gray-400" : ""
+              }`}
+            >
+              {discipline.name}
+            </span>
             <input
-              className="checkbox"
               type="checkbox"
+              className="checkbox checkbox-primary"
               checked={!!discipline.completed}
               disabled={discipline.completed}
               onChange={() => props.onComplete(discipline._id)}
