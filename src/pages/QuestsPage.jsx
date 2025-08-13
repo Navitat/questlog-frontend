@@ -376,19 +376,22 @@ function QuestsPage({ setUserInfo }) {
         ) : (
           <div>
             {/* DaisyUI Tabs */}
-            <div className="tabs mb-4">
-              <a
-                className="tab tab-lifted tab-active"
+            <div className="tabs tabs-border mb-4">
+              <input
+                type="radio"
+                name="my_tabs"
+                className="tab"
+                aria-label="In Progress"
+                defaultChecked
                 onClick={() => setActiveTab("notCompleted")}
-              >
-                In Progress
-              </a>
-              <a
-                className="tab tab-lifted"
+              />
+              <input
+                type="radio"
+                name="my_tabs"
+                className="tab"
+                aria-label="Completed"
                 onClick={() => setActiveTab("completed")}
-              >
-                Completed
-              </a>
+              />
             </div>
 
             {/* Tab Content */}

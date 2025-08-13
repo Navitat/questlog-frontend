@@ -7,6 +7,7 @@ function QuestCard({
   handleCreateTask,
   handleCreateInv,
   handleTask,
+  handleQuest,
 }) {
   const [tasksOpen, setTasksOpen] = useState(false);
   const [inventoryOpen, setInventoryOpen] = useState(false);
@@ -99,20 +100,23 @@ function QuestCard({
         )}
 
         {/* Actions */}
-        <div className="card-actions justify-end mt-4 gap-2">
-          <button
-            className="btn btn-sm btn-primary"
-            onClick={() => handleCreateTask(quest._id)}
-          >
-            Add Task
-          </button>
-          <button
-            className="btn btn-sm btn-primary"
-            onClick={() => handleCreateInv(quest._id)}
-          >
-            Add To Inventory
-          </button>
-          <button className="btn btn-sm">Edit</button>
+        <div className="card-actions justify-center mt-4">
+          <div className="flex gap-2">
+            <button
+              className="btn btn-sm btn-primary"
+              onClick={() => handleCreateTask(quest._id)}
+            >
+              Add Task
+            </button>
+            <button
+              className="btn btn-sm btn-primary"
+              onClick={() => handleCreateInv(quest._id)}
+            >
+              Add To Inventory
+            </button>
+            {/* <button className="btn btn-sm">Edit</button> */}
+          </div>
+          <button className="btn btn-secondary">Finish Quest</button>
         </div>
       </div>
     </div>

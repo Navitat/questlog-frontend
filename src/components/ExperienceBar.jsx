@@ -7,7 +7,7 @@ function ExperienceBar({ currentXp }) {
   return (
     <div className="relative w-64">
       <progress
-        className="progress progress-primary w-full"
+        className="progress progress-primary w-full h-3"
         value={currentXp}
         max={maxXP}
       ></progress>

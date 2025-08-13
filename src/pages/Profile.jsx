@@ -182,11 +182,11 @@ function Profile() {
 
   return (
     <>
-      <div className="flex justify-center gap-2 mt-4">
+      {/* <div className="flex justify-center gap-2 mt-4">
         <Link to="/quests" className="btn btn-primary">
           Quests
         </Link>
-      </div>
+      </div> */}
 
       <div className="mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
         {/* Left column */}
