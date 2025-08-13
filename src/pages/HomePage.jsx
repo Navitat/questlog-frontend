@@ -1,18 +1,54 @@
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { useRef } from "react";
 import heroImg from "../assets/gamification.png";
+import sectionImg1 from "../assets/gamification.png";
+import sectionImg2 from "../assets/gamification.png";
+import sectionImg3 from "../assets/gamification.png";
+import sectionImg4 from "../assets/gamification.png";
+import ScrollIcon from "../components/ScrollIcon";
+
+function Section({ img, title, text, reverse }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true });
+
+  return (
+    <div className="bg-base-100 py-16">
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 30 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.9 }}
+        className={`container mx-auto px-4 flex flex-col ${
+          reverse ? "lg:flex-row-reverse" : "lg:flex-row"
+        } items-center gap-8`}
+      >
+        <img src={img} alt={title} className="max-w-md rounded-lg shadow-lg" />
+        <div>
+          <h2 className="text-4xl font-bold mb-4">{title}</h2>
+          <p className="mb-4">{text}</p>
+          <button className="btn btn-primary">Learn More</button>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
 
 function HomePage() {
+  // Parallax for hero image
+  const { scrollY } = useScroll();
+  const heroY = useTransform(scrollY, [0, 300], [0, -80]); // slower scroll
+
   return (
     <>
-      <div className="hero bg-base-200 min-h-screen">
+      {/* HERO */}
+      <div className="hero bg-base-200 min-h-screen relative">
         <div className="hero-content flex-col lg:flex-row-reverse">
-          {/* Right side - PNG placeholder */}
-          <img
+          <motion.img
             src={heroImg}
             alt="Hero Illustration"
             className="max-w-sm rounded-lg"
+            style={{ y: heroY }}
           />
-
-          {/* Left side - Text & Buttons */}
           <div>
             <h1 className="text-5xl font-bold">Your Hero Title</h1>
             <p className="py-6">
@@ -26,83 +62,31 @@ function HomePage() {
           </div>
         </div>
       </div>
-      <div className="bg-base-100 py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">
-            What Can This App Do?
-          </h2>
+      <ScrollIcon />
 
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {/* Feature 1 */}
-            <div className="card bg-base-200 shadow-xl">
-              <div className="card-body items-center text-center">
-                <div className="text-primary text-5xl mb-4">🚀</div>
-                <h3 className="card-title">Fast & Responsive</h3>
-                <p>
-                  Enjoy lightning-fast performance and smooth interactions on
-                  any device.
-                </p>
-              </div>
-            </div>
-
-            {/* Feature 2 */}
-            <div className="card bg-base-200 shadow-xl">
-              <div className="card-body items-center text-center">
-                <div className="text-primary text-5xl mb-4">🔒</div>
-                <h3 className="card-title">Secure</h3>
-                <p>
-                  Your data is protected with industry-standard encryption and
-                  privacy measures.
-                </p>
-              </div>
-            </div>
-
-            {/* Feature 3 */}
-            <div className="card bg-base-200 shadow-xl">
-              <div className="card-body items-center text-center">
-                <div className="text-primary text-5xl mb-4">⚙️</div>
-                <h3 className="card-title">Customizable</h3>
-                <p>
-                  Tailor the experience to your needs with flexible settings and
-                  options.
-                </p>
-              </div>
-            </div>
-
-            {/* Feature 4 */}
-            <div className="card bg-base-200 shadow-xl">
-              <div className="card-body items-center text-center">
-                <div className="text-primary text-5xl mb-4">🌍</div>
-                <h3 className="card-title">Global Access</h3>
-                <p>
-                  Use the app anywhere in the world with reliable global
-                  connectivity.
-                </p>
-              </div>
-            </div>
-
-            {/* Feature 5 */}
-            <div className="card bg-base-200 shadow-xl">
-              <div className="card-body items-center text-center">
-                <div className="text-primary text-5xl mb-4">📊</div>
-                <h3 className="card-title">Analytics</h3>
-                <p>
-                  Get detailed insights into your usage and performance metrics.
-                </p>
-              </div>
-            </div>
-
-            {/* Feature 6 */}
-            <div className="card bg-base-200 shadow-xl">
-              <div className="card-body items-center text-center">
-                <div className="text-primary text-5xl mb-4">🤝</div>
-                <h3 className="card-title">Collaboration</h3>
-                <p>Work seamlessly with others in real-time from anywhere.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* SECTIONS */}
+      <Section
+        img={sectionImg1}
+        title="What Can This App Do?"
+        text="Our app offers cutting-edge tools that combine speed, security, and flexibility. Access it globally, customize your experience, and collaborate in real-time with your team."
+      />
+      <Section
+        img={sectionImg2}
+        title="Seamless Collaboration"
+        text="Work in real-time with colleagues from anywhere in the world, making teamwork faster and more productive."
+        reverse
+      />
+      <Section
+        img={sectionImg3}
+        title="Advanced Analytics"
+        text="Gain powerful insights into your usage patterns, helping you make informed decisions and optimize your workflow."
+      />
+      <Section
+        img={sectionImg4}
+        title="Customizable to Your Needs"
+        text="Tailor the app to your exact needs with a wide range of settings and personalization options."
+        reverse
+      />
     </>
   );
 }
