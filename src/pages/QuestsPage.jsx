@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import QuestCard from "../components/QuestCard";
 import { AuthContext } from "../context/auth.context";
 
-function QuestsPage({ setUserInfo }) {
+function QuestsPage({ setUserInfo, getUser }) {
   const [quests, setQuests] = useState([]);
   const [skills, setSkills] = useState([]);
   const { user } = useContext(AuthContext);
@@ -206,6 +206,40 @@ function QuestsPage({ setUserInfo }) {
       })
       .catch((error) => {
         console.log("Error completing task");
+        console.log(error);
+      });
+  };
+
+  const completeQuest = (id) => {
+    const storedToken = localStorage.getItem("authToken");
+
+    axios
+      .patch(
+        `${import.meta.env.VITE_API_URL}/api/quests/${id}/complete`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        }
+      )
+      .then((response) => {
+        const data = response.data;
+
+        setUserInfo((prev) => ({
+          ...prev,
+          level: data.userLevel,
+          experience: data.userExp,
+          skills: prev.skills.map((skill) =>
+            skill.name === data.skillName
+              ? { ...skill, level: data.skillLevel, experience: data.skillExp }
+              : skill
+          ),
+        }));
+
+        getQuests();
+        getUser();
+      })
+      .catch((error) => {
+        console.log("Error while completing quest");
         console.log(error);
       });
   };
@@ -417,7 +451,7 @@ function QuestsPage({ setUserInfo }) {
                       setQuestIdToAddInv(id);
                       setCreateInvItemModaOpen(true);
                     }}
-                    handleTask={completeTask}
+                    onComplete={completeQuest}
                   />
                 ))}
             </div>

@@ -7,7 +7,7 @@ function QuestCard({
   handleCreateTask,
   handleCreateInv,
   handleTask,
-  handleQuest,
+  onComplete,
 }) {
   const [tasksOpen, setTasksOpen] = useState(false);
   const [inventoryOpen, setInventoryOpen] = useState(false);
@@ -116,7 +116,12 @@ function QuestCard({
             </button>
             {/* <button className="btn btn-sm">Edit</button> */}
           </div>
-          <button className="btn btn-secondary">Finish Quest</button>
+          <button
+            className="btn btn-secondary"
+            onClick={() => onComplete(quest._id)}
+          >
+            Finish Quest
+          </button>
         </div>
       </div>
     </div>

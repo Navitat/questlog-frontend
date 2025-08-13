@@ -375,7 +375,7 @@ function Profile() {
           </div>
         </div>
       </div>
-      <QuestsPage setUserInfo={setUserInfo} />
+      <QuestsPage setUserInfo={setUserInfo} getUser={getUser} />
     </>
   );
 }
