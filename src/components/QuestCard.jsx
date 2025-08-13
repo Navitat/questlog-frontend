@@ -6,6 +6,7 @@ function QuestCard({
   handleDelete,
   handleCreateTask,
   handleCreateInv,
+  handleTask,
 }) {
   const [tasksOpen, setTasksOpen] = useState(false);
   const [inventoryOpen, setInventoryOpen] = useState(false);
@@ -51,6 +52,7 @@ function QuestCard({
                     type="checkbox"
                     className="checkbox checkbox-primary"
                     checked={task.completed}
+                    onChange={() => handleTask(quest._id, task._id)}
                   />
                   <span
                     className={

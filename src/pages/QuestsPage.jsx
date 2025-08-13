@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import QuestCard from "../components/QuestCard";
 import { AuthContext } from "../context/auth.context";
 
-function QuestsPage(props) {
+function QuestsPage({ setUserInfo }) {
   const [quests, setQuests] = useState([]);
   const [skills, setSkills] = useState([]);
   const { user } = useContext(AuthContext);
@@ -187,6 +187,29 @@ function QuestsPage(props) {
       });
   };
 
+  const completeTask = (questId, taskId) => {
+    const storedToken = localStorage.getItem("authToken");
+
+    axios
+      .patch(
+        `${
+          import.meta.env.VITE_API_URL
+        }/api/quests/${questId}/tasks/${taskId}/complete`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        }
+      )
+      .then(() => {
+        console.log("completed task");
+        getQuests();
+      })
+      .catch((error) => {
+        console.log("Error completing task");
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
     getQuests();
     getSkills();
@@ -358,7 +381,7 @@ function QuestsPage(props) {
                 className="tab tab-lifted tab-active"
                 onClick={() => setActiveTab("notCompleted")}
               >
-                Not Completed
+                In Progress
               </a>
               <a
                 className="tab tab-lifted"
@@ -391,6 +414,7 @@ function QuestsPage(props) {
                       setQuestIdToAddInv(id);
                       setCreateInvItemModaOpen(true);
                     }}
+                    handleTask={completeTask}
                   />
                 ))}
             </div>
