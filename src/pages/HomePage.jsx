@@ -1,11 +1,13 @@
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import heroImg from "../assets/gamification.png";
 import sectionImg1 from "../assets/gamification.png";
 import sectionImg2 from "../assets/gamification.png";
 import sectionImg3 from "../assets/gamification.png";
 import sectionImg4 from "../assets/gamification.png";
 import ScrollIcon from "../components/ScrollIcon";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../context/auth.context";
 
 function Section({ img, title, text, reverse }) {
   const ref = useRef(null);
@@ -26,7 +28,6 @@ function Section({ img, title, text, reverse }) {
         <div>
           <h2 className="text-4xl font-bold mb-4">{title}</h2>
           <p className="mb-4">{text}</p>
-          <button className="btn btn-primary">Learn More</button>
         </div>
       </motion.div>
     </div>
@@ -37,6 +38,7 @@ function HomePage() {
   // Parallax for hero image
   const { scrollY } = useScroll();
   const heroY = useTransform(scrollY, [0, 300], [0, -80]); // slower scroll
+  const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
 
   return (
     <>
@@ -50,14 +52,18 @@ function HomePage() {
             style={{ y: heroY }}
           />
           <div>
-            <h1 className="text-5xl font-bold">Your Hero Title</h1>
+            <h1 className="text-5xl font-bold">QuestLog</h1>
             <p className="py-6">
-              This is where your description goes. You can describe your
-              product, service, or anything you want to highlight.
+              A place to organize your tasks, and be rewarded for it.
             </p>
             <div className="flex gap-4">
-              <button className="btn btn-primary">Get Started</button>
-              <button className="btn btn-secondary">Learn More</button>
+              {isLoggedIn && (
+                <>
+                  <Link to="/profile">
+                    <button className="btn btn-warning">Your Adventure</button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

@@ -10,7 +10,7 @@ function Navbar() {
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
-        <div className="navbar bg-base-300 w-full">
+        <div className="navbar bg-base-300 w-full relative">
           <div className="flex-none lg:hidden">
             <label
               htmlFor="my-drawer-3"
@@ -32,12 +32,12 @@ function Navbar() {
               </svg>
             </label>
           </div>
-          <div className="mx-2 flex-1 px-2">
+          <div className="absolute left-1/2 transform -translate-x-1/2">
             <Link to="/">
-              <button className="btn btn-primary">QuestLog</button>
+              <p className="btn btn-primary rounded-none text-lg">QuestLog</p>
             </Link>
           </div>
-          <div className="hidden flex-none lg:block">
+          <div className="hidden flex-none lg:block ml-auto">
             <ul className="menu menu-horizontal">
               {/* Navbar menu content here */}
               {isLoggedIn && (
