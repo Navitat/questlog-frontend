@@ -7,6 +7,7 @@ import DisciplinesList from "../components/DisciplinesList";
 import SidequestsList from "../components/SidequestsList";
 import { Link } from "react-router-dom";
 import QuestsPage from "./QuestsPage";
+import SkillRadar from "../components/skillRadar";
 
 function Profile() {
   const { user, isLoading } = useContext(AuthContext);
@@ -228,6 +229,9 @@ function Profile() {
                   </div>
                 );
               })}
+            </div>
+            <div className="card bg-base-100 shadow-xl p-4 h-100 w-full">
+              <SkillRadar skills={userInfo.skills} />
             </div>
           </div>
         </div>
