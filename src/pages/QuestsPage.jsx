@@ -23,6 +23,12 @@ function QuestsPage(props) {
   const [questIdToAddTask, setQuestIdToAddTask] = useState(null);
   const [taskName, setTaskName] = useState("");
 
+  const [isCreateInvItemModalOpen, setCreateInvItemModaOpen] = useState(false);
+  const [questIdToAddInv, setQuestIdToAddInv] = useState(null);
+  const [invName, setInvName] = useState("");
+  const [invType, setInvType] = useState("");
+  const [invUrl, setInvUrl] = useState("");
+
   const getQuests = () => {
     const storedToken = localStorage.getItem("authToken");
 
@@ -142,6 +148,45 @@ function QuestsPage(props) {
       .finally(() => setLoading(false));
   };
 
+  const createInventoryItem = () => {
+    console.log("Creating inventory Item");
+    if (!questIdToAddInv) return;
+    setLoading(true);
+    const storedToken = localStorage.getItem("authToken");
+
+    const newInvItem = {
+      name: invName,
+      type: invType,
+      url: invUrl,
+    };
+
+    axios
+      .post(
+        `${
+          import.meta.env.VITE_API_URL
+        }/api/quests/${questIdToAddInv}/inventory`,
+        newInvItem,
+        {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        }
+      )
+      .then((response) => {
+        getQuests();
+        setCreateInvItemModaOpen(false);
+        setQuestIdToAddInv(null);
+        setInvName("");
+        setInvType("");
+        setInvUrl("");
+      })
+      .catch((error) => {
+        console.log("Error while creating inventory item");
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   useEffect(() => {
     getQuests();
     getSkills();
@@ -253,7 +298,54 @@ function QuestsPage(props) {
         </div>
       )}
 
-      <div className="p-6">
+      {isCreateInvItemModalOpen && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg mb-4">Create Inventory Item</h3>
+            <input
+              type="text"
+              placeholder="Youtube course"
+              className="input input-bordered w-full mb-4"
+              value={invName}
+              onChange={(e) => setInvName(e.target.value)}
+            />
+            <select
+              className="select select-bordered w-full mb-4"
+              value={invType}
+              onChange={(e) => setInvType(e.target.value)}
+            >
+              <option value="">-- Select a type of resource --</option>
+              <option value="video">Video</option>
+              <option value="article">Article</option>
+              <option value="other">Other</option>
+            </select>
+            <input
+              type="text"
+              placeholder="www.your-resource.com"
+              className="input input-bordered w-full mb-4"
+              value={invUrl}
+              onChange={(e) => setInvUrl(e.target.value)}
+            />
+            <div className="modal-action">
+              <button
+                className="btn btn-accent"
+                disabled={!invName || !invType || !invUrl || loading}
+                onClick={createInventoryItem}
+              >
+                {loading ? "Saving..." : "Save"}
+              </button>
+              <button
+                className="btn"
+                onClick={() => setCreateInvItemModaOpen(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="p-6 max-w-6xl mx-auto">
         {quests.length === 0 ? (
           <p className="text-center text-gray-500 col-span-full">
             No quests available. Go create your first one!
@@ -277,7 +369,7 @@ function QuestsPage(props) {
             </div>
 
             {/* Tab Content */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {quests
                 .filter((q) =>
                   activeTab === "completed" ? q.completed : !q.completed
@@ -294,6 +386,10 @@ function QuestsPage(props) {
                     handleCreateTask={(id) => {
                       setQuestIdToAddTask(id);
                       setCreateTaskModalOpen(true);
+                    }}
+                    handleCreateInv={(id) => {
+                      setQuestIdToAddInv(id);
+                      setCreateInvItemModaOpen(true);
                     }}
                   />
                 ))}

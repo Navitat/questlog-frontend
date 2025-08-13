@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-function QuestCard({ quest, skills, handleDelete, handleCreateTask }) {
+function QuestCard({
+  quest,
+  skills,
+  handleDelete,
+  handleCreateTask,
+  handleCreateInv,
+}) {
   const [tasksOpen, setTasksOpen] = useState(false);
   const [inventoryOpen, setInventoryOpen] = useState(false);
 
@@ -98,7 +104,12 @@ function QuestCard({ quest, skills, handleDelete, handleCreateTask }) {
           >
             Add Task
           </button>
-          <button className="btn btn-sm btn-primary">Add To Inventory</button>
+          <button
+            className="btn btn-sm btn-primary"
+            onClick={() => handleCreateInv(quest._id)}
+          >
+            Add To Inventory
+          </button>
           <button className="btn btn-sm">Edit</button>
         </div>
       </div>
