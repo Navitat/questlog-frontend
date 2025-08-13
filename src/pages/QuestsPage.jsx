@@ -14,7 +14,7 @@ function QuestsPage(props) {
     const storedToken = localStorage.getItem("authToken");
 
     axios
-      .get(`${API_URL}/api/quests`, {
+      .get(`${import.meta.env.VITE_API_URL}/api/quests`, {
         headers: { Authorization: `Bearer ${storedToken}` },
       })
       .then((response) => {
@@ -31,7 +31,7 @@ function QuestsPage(props) {
     const storedToken = localStorage.getItem("authToken");
 
     axios
-      .get(`${API_URL}/api/user`, {
+      .get(`${import.meta.env.VITE_API_URL}/api/user`, {
         headers: { Authorization: `Bearer ${storedToken}` },
       })
       .then((response) => {

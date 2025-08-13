@@ -22,7 +22,7 @@ function LoginPage(props) {
     const requestBody = { email, password };
 
     axios
-      .post(`${API_URL}/auth/login`, requestBody)
+      .post(`${import.meta.env.VITE_API_URL}/auth/login`, requestBody)
       .then((response) => {
         // console.log("JWT Token: ", response.data.authToken);
         storeToken(response.data.authToken);

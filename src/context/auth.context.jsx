@@ -18,7 +18,7 @@ function AuthProviderWrapper(props) {
 
     if (storedToken) {
       axios
-        .get(`${API_URL}/auth/verify`, {
+        .get(`${import.meta.env.VITE_API_URL}/auth/verify`, {
           headers: { Authorization: `Bearer ${storedToken}` },
         })
         .then((response) => {

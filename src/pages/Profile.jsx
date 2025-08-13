@@ -29,7 +29,7 @@ function Profile() {
     const storedToken = localStorage.getItem("authToken");
 
     axios
-      .get(`${API_URL}/api/user`, {
+      .get(`${import.meta.env.VITE_API_URL}/api/user`, {
         headers: { Authorization: `Bearer ${storedToken}` },
       })
       .then((response) => {
@@ -50,7 +50,7 @@ function Profile() {
 
     axios
       .patch(
-        `${API_URL}/api/user/disciplines/${id}/complete`,
+        `${import.meta.env.VITE_API_URL}/api/user/disciplines/${id}/complete`,
         {},
         {
           headers: { Authorization: `Bearer ${storedToken}` },
@@ -90,9 +90,13 @@ function Profile() {
     const storedToken = localStorage.getItem("authToken");
 
     axios
-      .post(`${API_URL}/api/user/disciplines`, requestBody, {
-        headers: { Authorization: `Bearer ${storedToken}` },
-      })
+      .post(
+        `${import.meta.env.VITE_API_URL}/api/user/disciplines`,
+        requestBody,
+        {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        }
+      )
       .then((response) => {
         getUser();
 
@@ -119,9 +123,13 @@ function Profile() {
     const storedToken = localStorage.getItem("authToken");
 
     axios
-      .post(`${API_URL}/api/user/sidequests`, requestBody, {
-        headers: { Authorization: `Bearer ${storedToken}` },
-      })
+      .post(
+        `${import.meta.env.VITE_API_URL}/api/user/sidequests`,
+        requestBody,
+        {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        }
+      )
       .then((response) => {
         getUser();
         setSelectedSkillIdSq("");
@@ -142,7 +150,7 @@ function Profile() {
 
     axios
       .patch(
-        `${API_URL}/api/user/sidequests/${id}/complete`,
+        `${import.meta.env.VITE_API_URL}/api/user/sidequests/${id}/complete`,
         {},
         {
           headers: { Authorization: `Bearer ${storedToken}` },

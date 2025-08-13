@@ -22,7 +22,7 @@ function SignupPage() {
     const requestBody = { email, password, name };
 
     axios
-      .post(`${API_URL}/auth/signup`, requestBody)
+      .post(`${import.meta.env.VITE_API_URL}/auth/signup`, requestBody)
       .then((response) => {
         navigate("/login");
       })
