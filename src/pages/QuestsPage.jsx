@@ -451,6 +451,7 @@ function QuestsPage({ setUserInfo, getUser }) {
                       setQuestIdToAddInv(id);
                       setCreateInvItemModaOpen(true);
                     }}
+                    handleTask={completeTask}
                     onComplete={completeQuest}
                   />
                 ))}

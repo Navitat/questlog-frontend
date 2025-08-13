@@ -100,29 +100,31 @@ function QuestCard({
         )}
 
         {/* Actions */}
-        <div className="card-actions justify-center mt-4">
-          <div className="flex gap-2">
+        {!quest.completed && (
+          <div className="card-actions justify-center mt-4">
+            <div className="flex gap-2">
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={() => handleCreateTask(quest._id)}
+              >
+                Add Task
+              </button>
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={() => handleCreateInv(quest._id)}
+              >
+                Add To Inventory
+              </button>
+              {/* <button className="btn btn-sm">Edit</button> */}
+            </div>
             <button
-              className="btn btn-sm btn-primary"
-              onClick={() => handleCreateTask(quest._id)}
+              className="btn btn-secondary"
+              onClick={() => onComplete(quest._id)}
             >
-              Add Task
+              Finish Quest
             </button>
-            <button
-              className="btn btn-sm btn-primary"
-              onClick={() => handleCreateInv(quest._id)}
-            >
-              Add To Inventory
-            </button>
-            {/* <button className="btn btn-sm">Edit</button> */}
           </div>
-          <button
-            className="btn btn-secondary"
-            onClick={() => onComplete(quest._id)}
-          >
-            Finish Quest
-          </button>
-        </div>
+        )}
       </div>
     </div>
   );
