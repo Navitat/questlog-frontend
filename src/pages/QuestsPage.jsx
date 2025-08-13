@@ -20,6 +20,8 @@ function QuestsPage(props) {
   const [questToDeleteId, setQuestToDeleteId] = useState(null);
 
   const [isCreateTaskModalOpen, setCreateTaskModalOpen] = useState(false);
+  const [questIdToAddTask, setQuestIdToAddTask] = useState(null);
+  const [taskName, setTaskName] = useState("");
 
   const getQuests = () => {
     const storedToken = localStorage.getItem("authToken");
@@ -108,7 +110,37 @@ function QuestsPage(props) {
       });
   };
 
-  const createTask = () => {};
+  const createTask = () => {
+    console.log("Creating task");
+    if (!questIdToAddTask) return;
+
+    setLoading(true);
+    const storedToken = localStorage.getItem("authToken");
+
+    const newTask = {
+      name: taskName,
+    };
+
+    axios
+      .post(
+        `${import.meta.env.VITE_API_URL}/api/quests/${questIdToAddTask}/tasks`,
+        newTask,
+        {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        }
+      )
+      .then((response) => {
+        getQuests();
+        setCreateTaskModalOpen(false);
+        setQuestIdToAddTask(null);
+        setTaskName("");
+      })
+      .catch((error) => {
+        console.log("Error while creating Task");
+        console.log(error);
+      })
+      .finally(() => setLoading(false));
+  };
 
   useEffect(() => {
     getQuests();
@@ -191,6 +223,36 @@ function QuestsPage(props) {
         </div>
       )}
 
+      {isCreateTaskModalOpen && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg mb-4">Create Task</h3>
+            <input
+              type="text"
+              placeholder="First this..."
+              className="input input-bordered w-full mb-4"
+              value={taskName}
+              onChange={(e) => setTaskName(e.target.value)}
+            />
+            <div className="modal-action">
+              <button
+                className="btn btn-accent"
+                disabled={!taskName || loading}
+                onClick={createTask}
+              >
+                {loading ? "Saving..." : "Save"}
+              </button>
+              <button
+                className="btn"
+                onClick={() => setCreateTaskModalOpen(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="p-6">
         {quests.length === 0 ? (
           <p className="text-center text-gray-500 col-span-full">
@@ -228,6 +290,10 @@ function QuestsPage(props) {
                     handleDelete={(id) => {
                       setQuestToDeleteId(id);
                       setDeleteModalOpen(true);
+                    }}
+                    handleCreateTask={(id) => {
+                      setQuestIdToAddTask(id);
+                      setCreateTaskModalOpen(true);
                     }}
                   />
                 ))}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function QuestCard({ quest, skills, handleDelete }) {
+function QuestCard({ quest, skills, handleDelete, handleCreateTask }) {
   const [tasksOpen, setTasksOpen] = useState(false);
   const [inventoryOpen, setInventoryOpen] = useState(false);
 
@@ -92,7 +92,12 @@ function QuestCard({ quest, skills, handleDelete }) {
 
         {/* Actions */}
         <div className="card-actions justify-end mt-4 gap-2">
-          <button className="btn btn-sm btn-primary">Add Task</button>
+          <button
+            className="btn btn-sm btn-primary"
+            onClick={() => handleCreateTask(quest._id)}
+          >
+            Add Task
+          </button>
           <button className="btn btn-sm btn-primary">Add To Inventory</button>
           <button className="btn btn-sm">Edit</button>
         </div>
