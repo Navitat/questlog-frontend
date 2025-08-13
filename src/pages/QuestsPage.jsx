@@ -4,6 +4,7 @@ import QuestCard from "../components/QuestCard";
 import { AuthContext } from "../context/auth.context";
 
 function QuestsPage({ setUserInfo, getUser }) {
+  const [showToast, setShowToast] = useState(false);
   const [quests, setQuests] = useState([]);
   const [skills, setSkills] = useState([]);
   const { user } = useContext(AuthContext);
@@ -237,6 +238,10 @@ function QuestsPage({ setUserInfo, getUser }) {
 
         getQuests();
         getUser();
+        setShowToast(true);
+
+        // Hide toast after 3 seconds
+        setTimeout(() => setShowToast(false), 3000);
       })
       .catch((error) => {
         console.log("Error while completing quest");
@@ -455,6 +460,15 @@ function QuestsPage({ setUserInfo, getUser }) {
                     onComplete={completeQuest}
                   />
                 ))}
+            </div>
+          </div>
+        )}
+        {showToast && (
+          <div className="toast toast-center toast-middle mt-4">
+            <div className="alert alert-success shadow-lg">
+              <div>
+                <span>🎉 Quest completed successfully!</span>
+              </div>
             </div>
           </div>
         )}
