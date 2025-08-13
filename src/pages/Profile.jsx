@@ -181,13 +181,20 @@ function Profile() {
       });
   };
 
+  const scrollToSection = () => {
+    const section = document.getElementById("quests");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <>
-      {/* <div className="flex justify-center gap-2 mt-4">
-        <Link to="/quests" className="btn btn-primary">
-          Quests
-        </Link>
-      </div> */}
+      <div className="flex justify-center gap-2 mt-4">
+        <button className="btn btn-info" onClick={scrollToSection}>
+          Go to Quests
+        </button>
+      </div>
 
       <div className="mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
         {/* Left column */}

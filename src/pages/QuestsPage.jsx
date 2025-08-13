@@ -250,7 +250,7 @@ function QuestsPage({ setUserInfo, getUser }) {
   }, []);
 
   return (
-    <div className="min-h-screen">
+    <div id="quests" className="min-h-screen">
       <div className="flex justify-center gap-2 mt-4">
         <button
           className="btn btn-info"
