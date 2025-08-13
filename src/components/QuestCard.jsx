@@ -10,7 +10,7 @@ function QuestCard({ quest, skills, handleDelete }) {
           <h2 className="card-title">{quest.name}</h2>
           <button
             className="btn btn-x btn-error"
-            onClick={() => handleDelete(true)}
+            onClick={() => handleDelete(quest._id)}
           >
             X
           </button>

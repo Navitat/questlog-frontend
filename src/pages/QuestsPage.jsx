@@ -17,6 +17,7 @@ function QuestsPage(props) {
   const [selectedSkillId, setSelectedSkillId] = useState("");
 
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [questToDeleteId, setQuestToDeleteId] = useState(null);
 
   const getQuests = () => {
     const storedToken = localStorage.getItem("authToken");
@@ -74,11 +75,35 @@ function QuestsPage(props) {
       .catch((error) => {
         console.log("Error creating quest");
         console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
   const deleteQuest = () => {
-    console.log("Deleting quest");
+    if (!questToDeleteId) return;
+
+    setLoading(true);
+
+    const storedToken = localStorage.getItem("authToken");
+
+    axios
+      .delete(`${import.meta.env.VITE_API_URL}/api/quests/${questToDeleteId}`, {
+        headers: { Authorization: `Bearer ${storedToken}` },
+      })
+      .then((response) => {
+        getQuests();
+        setDeleteModalOpen(false);
+        setQuestToDeleteId(null);
+      })
+      .catch((error) => {
+        console.log("Error while deleting Quest");
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -99,7 +124,6 @@ function QuestsPage(props) {
         </button>
       </div>
 
-      {/* Modal create quest*/}
       {isCreateModalOpen && (
         <div className="modal modal-open">
           <div className="modal-box">
@@ -163,15 +187,26 @@ function QuestsPage(props) {
         </div>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
-        {quests.map((q) => (
-          <QuestCard
-            key={q._id}
-            quest={q}
-            skills={skills}
-            handleDelete={setDeleteModalOpen}
-          />
-        ))}
+      <div className="p-6">
+        {quests.length === 0 ? (
+          <p className="text-center text-gray-500 col-span-full">
+            No quests available. Go create your first one!
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {quests.map((q) => (
+              <QuestCard
+                key={q._id}
+                quest={q}
+                skills={skills}
+                handleDelete={(id) => {
+                  setQuestToDeleteId(id);
+                  setDeleteModalOpen(true);
+                }}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
