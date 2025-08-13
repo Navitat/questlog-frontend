@@ -2,12 +2,12 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import QuestCard from "../components/QuestCard";
 import { AuthContext } from "../context/auth.context";
-import { DayPicker } from "react-day-picker";
 
 function QuestsPage(props) {
   const [quests, setQuests] = useState([]);
   const [skills, setSkills] = useState([]);
   const { user } = useContext(AuthContext);
+  const [activeTab, setActiveTab] = useState("notCompleted");
 
   const [isLoading, setIsLoading] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -18,6 +18,8 @@ function QuestsPage(props) {
 
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [questToDeleteId, setQuestToDeleteId] = useState(null);
+
+  const [isCreateTaskModalOpen, setCreateTaskModalOpen] = useState(false);
 
   const getQuests = () => {
     const storedToken = localStorage.getItem("authToken");
@@ -106,6 +108,8 @@ function QuestsPage(props) {
       });
   };
 
+  const createTask = () => {};
+
   useEffect(() => {
     getQuests();
     getSkills();
@@ -193,18 +197,41 @@ function QuestsPage(props) {
             No quests available. Go create your first one!
           </p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {quests.map((q) => (
-              <QuestCard
-                key={q._id}
-                quest={q}
-                skills={skills}
-                handleDelete={(id) => {
-                  setQuestToDeleteId(id);
-                  setDeleteModalOpen(true);
-                }}
-              />
-            ))}
+          <div>
+            {/* DaisyUI Tabs */}
+            <div className="tabs mb-4">
+              <a
+                className="tab tab-lifted tab-active"
+                onClick={() => setActiveTab("notCompleted")}
+              >
+                Not Completed
+              </a>
+              <a
+                className="tab tab-lifted"
+                onClick={() => setActiveTab("completed")}
+              >
+                Completed
+              </a>
+            </div>
+
+            {/* Tab Content */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {quests
+                .filter((q) =>
+                  activeTab === "completed" ? q.completed : !q.completed
+                )
+                .map((q) => (
+                  <QuestCard
+                    key={q._id}
+                    quest={q}
+                    skills={skills}
+                    handleDelete={(id) => {
+                      setQuestToDeleteId(id);
+                      setDeleteModalOpen(true);
+                    }}
+                  />
+                ))}
+            </div>
           </div>
         )}
       </div>

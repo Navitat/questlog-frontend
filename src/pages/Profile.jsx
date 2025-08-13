@@ -6,6 +6,7 @@ import ExperienceBar from "../components/ExperienceBar";
 import DisciplinesList from "../components/DisciplinesList";
 import SidequestsList from "../components/SidequestsList";
 import { Link } from "react-router-dom";
+import QuestsPage from "./QuestsPage";
 
 function Profile() {
   const { user, isLoading } = useContext(AuthContext);
@@ -185,10 +186,9 @@ function Profile() {
         <Link to="/quests" className="btn btn-primary">
           Quests
         </Link>
-        <button className="btn btn-info">Inventory</button>
       </div>
 
-      <div className="min-h-screen mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+      <div className="mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
         {/* Left column */}
         <div className="flex flex-col gap-6">
           {/* Experience */}
@@ -375,6 +375,7 @@ function Profile() {
           </div>
         </div>
       </div>
+      <QuestsPage />
     </>
   );
 }
