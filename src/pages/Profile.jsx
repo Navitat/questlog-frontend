@@ -1,11 +1,9 @@
-import { use, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/auth.context";
-import { API_URL } from "../utils/api";
 import axios from "axios";
 import ExperienceBar from "../components/ExperienceBar";
 import DisciplinesList from "../components/DisciplinesList";
 import SidequestsList from "../components/SidequestsList";
-import { Link } from "react-router-dom";
 import QuestsPage from "./QuestsPage";
 import SkillRadar from "../components/skillRadar";
 
