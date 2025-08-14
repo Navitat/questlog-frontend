@@ -42,7 +42,7 @@ function HomePage() {
   return (
     <>
       {/* HERO */}
-      <div className="hero bg-base-200 min-h-screen relative">
+      <div className="hero bg-base-200 min-h-[90vh] relative">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <motion.img
             src={heroImg}

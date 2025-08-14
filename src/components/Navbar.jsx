@@ -79,7 +79,9 @@ function Navbar() {
               <Link to="/profile">
                 <button className="btn btn-warning mb-2">Your Adventure</button>
               </Link>
-              <button className="btn btn-neutral">Logout</button>
+              <Link to="/login">
+                <button className="btn btn-neutral">Log Out</button>
+              </Link>
             </>
           )}
           {!isLoggedIn && (
