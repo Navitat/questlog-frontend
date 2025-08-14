@@ -1,10 +1,9 @@
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useContext, useRef } from "react";
 import heroImg from "../assets/gamification.png";
-import sectionImg1 from "../assets/gamification.png";
-import sectionImg2 from "../assets/gamification.png";
-import sectionImg3 from "../assets/gamification.png";
-import sectionImg4 from "../assets/gamification.png";
+import sectionImg1 from "../assets/experience-section.png";
+import sectionImg2 from "../assets/disciplines-section.png";
+import sectionImg3 from "../assets/quests.png";
 import ScrollIcon from "../components/ScrollIcon";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
@@ -86,12 +85,6 @@ function HomePage() {
         img={sectionImg3}
         title="Advanced Analytics"
         text="Gain powerful insights into your usage patterns, helping you make informed decisions and optimize your workflow."
-      />
-      <Section
-        img={sectionImg4}
-        title="Customizable to Your Needs"
-        text="Tailor the app to your exact needs with a wide range of settings and personalization options."
-        reverse
       />
     </>
   );
