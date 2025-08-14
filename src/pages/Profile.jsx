@@ -213,7 +213,7 @@ function Profile() {
                 <p>Level: {userInfo.level}</p>
               </div>
 
-              <div className="flex flex-col justify-center flex-1 min-w-[200px]">
+              <div className="flex flex-col justify-center flex-1">
                 <p>Current XP:</p>
                 <ExperienceBar currentXp={userInfo.experience} />
               </div>
