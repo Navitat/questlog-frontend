@@ -86,7 +86,14 @@ function QuestCard({
                     key={index}
                     className="flex items-center gap-2 rounded-md border p-2 bg-base-100"
                   >
-                    <span className="font-medium">{item.name}</span>
+                    {/* <span className="font-medium">{item.name}</span> */}
+                    <a
+                      className="link link-hover"
+                      href={item.url}
+                      target="_blank"
+                    >
+                      {item.name}
+                    </a>
                     {item.quantity && (
                       <span className="text-sm text-base-content/60">
                         x{item.quantity}
