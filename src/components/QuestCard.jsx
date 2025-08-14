@@ -99,6 +99,11 @@ function QuestCard({
                         x{item.quantity}
                       </span>
                     )}
+                    {item.type && (
+                      <span className="badge badge-sm badge-neutral">
+                        {item.type}
+                      </span>
+                    )}
                   </li>
                 ))}
               </ul>
