@@ -10,6 +10,8 @@ import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
 import QuestsPage from "./pages/QuestsPage";
 import About from "./pages/About";
+import { h1 } from "framer-motion/client";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -51,6 +53,7 @@ function App() {
           }
         />
         <Route path="/about" element={<About />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </>
