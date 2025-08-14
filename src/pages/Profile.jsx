@@ -235,7 +235,7 @@ function Profile() {
                 );
               })}
             </div>
-            <div className="card bg-base-100 shadow-xl p-4 h-100 w-full">
+            <div className="flex items-center card bg-base-100 shadow-xl p-4 h-100 w-full">
               <SkillRadar skills={userInfo.skills} />
             </div>
           </div>
