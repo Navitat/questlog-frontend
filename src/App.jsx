@@ -9,6 +9,7 @@ import Profile from "./pages/Profile";
 import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
 import QuestsPage from "./pages/QuestsPage";
+import About from "./pages/About";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
             </IsAnon>
           }
         />
+        <Route path="/about" element={<About />} />
       </Routes>
       <Footer />
     </>
