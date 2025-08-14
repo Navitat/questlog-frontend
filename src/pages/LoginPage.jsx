@@ -3,8 +3,6 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 
-import { API_URL } from "../utils/api";
-
 function LoginPage(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,7 +34,7 @@ function LoginPage(props) {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex justify-center items-center min-h-[90vh]">
       <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-sm border text-lg p-4">
         <form onSubmit={handleLoginSubmit}>
           <legend className="fieldset-legend">Log In</legend>

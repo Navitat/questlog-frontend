@@ -33,7 +33,7 @@ function SignupPage() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex justify-center items-center min-h-[90vh]">
       <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-sm border text-lg p-4">
         <form onSubmit={handleSignupSubmit}>
           <legend className="fieldset-legend">Sign Up</legend>
