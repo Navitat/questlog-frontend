@@ -63,6 +63,16 @@ function HomePage() {
                   </Link>
                 </>
               )}
+              {!isLoggedIn && (
+                <>
+                  <Link to="/signup">
+                    <button className="btn btn-secondary">Sign up</button>
+                  </Link>
+                  <Link to="/login">
+                    <button className="btn btn-accent ml-2">Login</button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -71,20 +81,20 @@ function HomePage() {
 
       {/* SECTIONS */}
       <Section
-        img={sectionImg1}
-        title="What Can This App Do?"
-        text="Our app offers cutting-edge tools that combine speed, security, and flexibility. Access it globally, customize your experience, and collaborate in real-time with your team."
+        img={sectionImg3}
+        title="Create Quests"
+        text="Organize your important goals in Quests. Subdivide them in tasks and add resources to the in the form of 'inventory items'."
       />
       <Section
         img={sectionImg2}
-        title="Seamless Collaboration"
-        text="Work in real-time with colleagues from anywhere in the world, making teamwork faster and more productive."
+        title="Disciplines and Side Quests"
+        text="For those tasks you dont't want to forget, and the daily routines that will improve your self."
         reverse
       />
       <Section
-        img={sectionImg3}
-        title="Advanced Analytics"
-        text="Gain powerful insights into your usage patterns, helping you make informed decisions and optimize your workflow."
+        img={sectionImg1}
+        title="Gain Experience"
+        text="Every time you complete a Quest, Sidequest or journey, gain experience and watch how your stats keep improving."
       />
     </>
   );
