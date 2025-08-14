@@ -269,6 +269,12 @@ function QuestsPage({ setUserInfo, getUser }) {
         >
           Add Quest
         </button>
+        <div
+          className="tooltip items-center"
+          data-tip="Every completed Quest gives 20 EXP"
+        >
+          <span className="btn btn-sm cursor-pointer">?</span>
+        </div>
       </div>
 
       {isCreateModalOpen && (

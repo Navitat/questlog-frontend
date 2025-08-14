@@ -267,7 +267,10 @@ function Profile() {
               <div className="card-body">
                 <div className="flex items-center justify-between gap-2">
                   <h2 className="card-title">Disciplines</h2>
-                  <div className="tooltip" data-tip="For your daily routines!">
+                  <div
+                    className="tooltip"
+                    data-tip="For your daily routines! They give 10 EXP."
+                  >
                     <span className="btn btn-sm cursor-pointer">?</span>
                   </div>
                   <div>
@@ -337,7 +340,10 @@ function Profile() {
               <div className="card-body">
                 <div className="flex items-center justify-between gap-2">
                   <h2 className="card-title">Side Quests</h2>
-                  <div className="tooltip" data-tip="For the urgent tasks!">
+                  <div
+                    className="tooltip"
+                    data-tip="For the urgent tasks! They give 10 EXP"
+                  >
                     <span className="btn btn-sm cursor-pointer">?</span>
                   </div>
                   <div>
