@@ -17,13 +17,24 @@ function DisciplinesList(props) {
             >
               {discipline.name}
             </span>
-            <input
-              type="checkbox"
-              className="checkbox checkbox-primary"
-              checked={!!discipline.completed}
-              disabled={discipline.completed}
-              onChange={() => props.onComplete(discipline._id)}
-            />
+
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                className="checkbox checkbox-primary"
+                checked={!!discipline.completed}
+                disabled={discipline.completed}
+                onChange={() => props.onComplete(discipline._id)}
+              />
+
+              <button
+                type="button"
+                className="btn btn-error btn-xs"
+                onClick={() => props.onDelete(discipline._id)}
+              >
+                Delete
+              </button>
+            </div>
           </label>
         );
       })}

@@ -79,6 +79,23 @@ function Profile() {
       });
   };
 
+  const deleteDiscipline = (id) => {
+    console.log(`Delete discipline with id: ${id}`);
+    const storedToken = localStorage.getItem("authToken");
+
+    axios
+      .delete(`${import.meta.env.VITE_API_URL}/api/user/disciplines/${id}`, {
+        headers: { Authorization: `Bearer ${storedToken}` },
+      })
+      .then((response) => {
+        getUser();
+      })
+      .catch((error) => {
+        console.log("Error while deleting Discipline");
+        console.log(error);
+      });
+  };
+
   const createDiscipline = () => {
     setLoading(true);
 
@@ -265,6 +282,7 @@ function Profile() {
                 <DisciplinesList
                   disciplines={userInfo.disciplines}
                   onComplete={completeDiscipline}
+                  onDelete={deleteDiscipline}
                 />
               </div>
             </div>
